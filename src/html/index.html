@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <head>
+        <title>requirejs</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../css/base/base.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/controller/index.css"/>
+        <!--[if IE]>
+	        <link rel="stylesheet" type="text/css" href="../csstest/main.css"/>
+        <![endif]-->
+    </head>
+    <body>
+    	<div class="main border-grey" id="name1">
+    		<div class="wrapper">未加载 index.js</div>
+    	</div>
+    	<!--<div id="name1">
+    		tip:测试HTML注释
+    	</div>-->
+    	<!--  项目 -->
+        <script type="text/javascript" src="../js/base/require-config.js" defer="true"></script>
+        <script data-main="../js/controller/index.js" src="../js/lib/require.min.js" defer="true"></script>
+    </body>
+</html>

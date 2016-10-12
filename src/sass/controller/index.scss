@@ -1,0 +1,17 @@
+.main{
+	width: 1200px;
+	height: 241px;
+	margin: 0 auto;
+	background: url(../../img/push-bg.jpg);
+	
+	.btn{
+		background: blue;
+		font-family: Arial;
+	    font-style: italic;
+	    font-size: 14px;
+	    line-height: 18px;
+	    font-weight: bold;
+		color: white;
+		box-shadow: 3px 0 #000000;
+	}
+}

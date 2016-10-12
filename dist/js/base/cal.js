@@ -1,0 +1,1 @@
+define(function(){var n={add:function(n,r){return n+r}};return n});

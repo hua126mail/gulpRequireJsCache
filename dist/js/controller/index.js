@@ -1,0 +1,1 @@
+define(["jq","cal"],function($,o){function n(o,n){var e=o*n;console.log(e)}$(".wrapper").html("Good！成功加载index.js"),n(10,5),console.log(o.add(3,5))});
