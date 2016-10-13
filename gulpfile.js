@@ -2,7 +2,6 @@ var gulp = require('gulp'),
 	sass = require('gulp-sass'),						//编译sass
 	cssmin = require('gulp-clean-css'),					//压缩css
 	autoprefixer = require('gulp-autoprefixer'),		//添加浏览器前缀
-	cssver = require('gulp-make-css-url-version'),
 	rev = require('gulp-rev'),							//添加版本号
 	revCollector = require('gulp-rev-collector'),		//添加版本号
 	clean = require('gulp-clean'),						//清理文目标文件夹
@@ -22,16 +21,6 @@ gulp.task("cleanCss",function(){
 	.pipe(clean());
 });
 
-gulp.task("cleanImg",function(){
-	return gulp.src('dist/img',{read:false})
-	.pipe(clean());
-});
-
-gulp.task("cleanJs",function(){
-	return gulp.src(['dist/js/*','!dist/js/lib'],{read:false})
-	.pipe(clean());
-})
-
 gulp.task('sass', ['cleanCss'],function () {			//执行完cleanCss任务后再执行sass任务
   	gulp.src('src/sass/**/*.scss')
     .pipe(sass())
@@ -47,10 +36,9 @@ gulp.task('sass', ['cleanCss'],function () {			//执行完cleanCss任务后再�
     
 });
 
-gulp.task('cssso', function () {
-    return gulp.src('src/csstest/main.css')
-        .pipe(csso())
-        .pipe(gulp.dest('dist/csstest'));
+gulp.task("cleanImg",function(){
+	return gulp.src('dist/img',{read:false})
+	.pipe(clean());
 });
 
 gulp.task('imgmin',['cleanImg'], function () {
@@ -60,6 +48,24 @@ gulp.task('imgmin',['cleanImg'], function () {
         .pipe(gulp.dest('dist/img'))
         .pipe(rev.manifest())//- 生成一个rev-manifest.json
     	.pipe(gulp.dest('rev/img'));
+});
+
+gulp.task("cleanJs",function(){
+	return gulp.src(['dist/js/*','!dist/js/lib'],{read:false})
+	.pipe(clean());
+})
+
+gulp.task('jsmin', ['cleanJs'], function () {
+    gulp.src(['src/js/**/*.js','!src/js/**/*.min.js'])
+    	.pipe(jshint())
+        .pipe(uglify())
+        .pipe(rev({merge:true}))
+        .pipe(gulp.dest('dist/js'))
+        .pipe(rev.manifest())//- 生成一个rev-manifest.json
+    	.pipe(gulp.dest('rev/js'));
+    	
+    gulp.src(['src/js/lib/**/*.js'])
+        .pipe(gulp.dest('dist/js/lib'))
 });
 
 gulp.task('htmlmin',function () {
@@ -72,26 +78,7 @@ gulp.task('htmlmin',function () {
     };
     gulp.src('src/html/**/*.html')
         .pipe(htmlmin(options))
-        .pipe(rev())
         .pipe(gulp.dest('dist/html'))
-        .pipe(rev.manifest())//- 生成一个rev-manifest.json
-    	.pipe(gulp.dest('rev/html'));
-});
-
-gulp.task('jsmin', ['cleanJs'], function () {
-    gulp.src(['src/js/**/*.js','!src/js/**/*.min.js'])
-    	.pipe(jshint())
-        .pipe(uglify({
-            //mangle: true,//类型：Boolean 默认：true 是否修改变量名
-            mangle: {except: ['require' ,'exports' ,'module' ,'$']}//排除混淆关键字
-        }))
-        .pipe(rev({merge:true}))
-        .pipe(gulp.dest('dist/js'))
-        .pipe(rev.manifest())//- 生成一个rev-manifest.json
-    	.pipe(gulp.dest('rev/js'));
-    	
-    gulp.src(['src/js/lib/**/*.js'])
-        .pipe(gulp.dest('dist/js/lib'))
 });
 
 
@@ -118,16 +105,16 @@ gulp.task('replaceURL', function(){
 
 gulp.task('revUrl', function() {
     gulp.src(['rev/{css,img,js}/*.json', 'dist/html/**/*.html'])		//- 读取 rev-manifest.json 文件以及需要进行css名替换的文件
-    .pipe(revCollector())                               //- 执行文件内css名的替换
-    .pipe(gulp.dest('dist/html'));	//- 替换后的文件输出的目录
+    .pipe(revCollector())                               				//- 执行文件内css名的替换
+    .pipe(gulp.dest('dist/html'));										//- 替换后的文件输出的目录
     
-    gulp.src(['rev/{css,img,js}/*.json', 'dist/css/**/*.css'])		//- 读取 rev-manifest.json 文件以及需要进行css名替换的文件
-    .pipe(revCollector())                               //- 执行文件内css名的替换
-    .pipe(gulp.dest('dist/css'));	//- 替换后的文件输出的目录
+    gulp.src(['rev/{css,img,js}/*.json', 'dist/css/**/*.css'])		
+    .pipe(revCollector())                               
+    .pipe(gulp.dest('dist/css'));	
     
-    gulp.src(['rev/{css,img,js}/*.json', 'dist/js/**/*.js'])		//- 读取 rev-manifest.json 文件以及需要进行css名替换的文件
-    .pipe(revCollector())                               //- 执行文件内css名的替换
-    .pipe(gulp.dest('dist/js'));	//- 替换后的文件输出的目录
+    gulp.src(['rev/{css,img,js}/*.json', 'dist/js/**/*.js'])		
+    .pipe(revCollector())                               
+    .pipe(gulp.dest('dist/js'));	
     
 });
 
