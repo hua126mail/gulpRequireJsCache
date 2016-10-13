@@ -1,4 +1,4 @@
-# gulpRequireJs
+# gulpRequireJsCache
 使用gulp解决requireJs项目前端缓存问题
 
 根据packjson文件，导入gulp依赖：npm install --save-dev
