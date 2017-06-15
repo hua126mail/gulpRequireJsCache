@@ -1,3 +1,4 @@
+//更新时间：2017-06-15
 var gulp = require('gulp'),
 	sass = require('gulp-sass'),						//编译sass
 	cssmin = require('gulp-clean-css'),					//压缩css
