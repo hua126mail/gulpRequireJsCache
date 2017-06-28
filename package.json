@@ -1,8 +1,8 @@
 {
-  "name": "test",
+  "name": "gulp打包",
   "version": "1.0.0",
-  "description": "第一个gulp项目",
-  "main": "fis-conf.js",
+  "description": "requirejs项目gulp打包",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
